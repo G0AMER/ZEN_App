@@ -78,7 +78,7 @@ class _MainScreen extends State<MainScreen>
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/back.png'),
+            image: AssetImage('8_U2_A7265_52b8a1cde6.webp'),
             fit: BoxFit.cover,
           ),
         ),
@@ -129,8 +129,7 @@ class _MainScreen extends State<MainScreen>
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 255, 255, 255),
-                    onPrimary: Colors.black,
+                    foregroundColor: Colors.black, backgroundColor: Color.fromARGB(255, 255, 255, 255),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0),
                       side: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
@@ -161,8 +160,7 @@ class _MainScreen extends State<MainScreen>
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(0, 255, 255, 255),
-                    onPrimary: Color.fromARGB(255, 255, 255, 255),
+                    foregroundColor: Color.fromARGB(255, 255, 255, 255), backgroundColor: Color.fromARGB(0, 255, 255, 255),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0),
                       side:

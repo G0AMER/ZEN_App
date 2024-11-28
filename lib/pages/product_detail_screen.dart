@@ -218,7 +218,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
                 ],
               ),
         style: ElevatedButton.styleFrom(
-          primary: Colors.transparent,
+          backgroundColor: Colors.transparent,
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_isSuccess ? 50.0 : 30.0),

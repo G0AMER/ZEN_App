@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/backc.png'),
+            image: AssetImage('baniere-femme-1-.webp'),
             fit: BoxFit.cover,
           ),
         ),
@@ -183,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 10.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 87, 7, 7),
+                        backgroundColor: Color.fromARGB(255, 87, 7, 7),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
@@ -337,7 +337,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 20.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 87, 7, 7),
+                        backgroundColor: Color.fromARGB(255, 87, 7, 7),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),

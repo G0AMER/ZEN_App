@@ -182,7 +182,7 @@ class _SignupState extends State<Signup> {
                     SizedBox(height: 40.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 87, 7, 7),
+                        backgroundColor: Color.fromARGB(255, 87, 7, 7),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),

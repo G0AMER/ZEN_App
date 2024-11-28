@@ -92,7 +92,13 @@ flutter:
     - assets/facebook.png
     - assets/backc.png
     - assets/backcc.png
-
+    - assets/baniere-femme-1-.webp
+    - assets/8_U2_A7265_52b8a1cde6.webp
+    - assets/8_U2_A7684_33528603bf.webp
+    - assets/8_U2_A8932_eebd5f84c2.webp
+    - assets/8_U2_A9012_7ee53ffe35.webp
+    - assets/8_U2_A9199_f57e8c7624.webp
+    - assets/8_U2_A9369_566ef6da8f.webp
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
