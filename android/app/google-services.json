@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "924244994106",
+    "project_id": "zen-c-i-s-nu02z8",
+    "storage_bucket": "zen-c-i-s-nu02z8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924244994106:android:58166ef18019519a6d2d03",
+        "android_client_info": {
+          "package_name": "com.example.my_fashion_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924244994106-369sb9qt25g5flgn3e81se20o0c690u9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJGd64iaL3-bLRzJZWIQqJ-DNVFtNUaIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924244994106-369sb9qt25g5flgn3e81se20o0c690u9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "924244994106-1ed5lh1nv0rfq031iniffoktg9qt4j4u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.zencis"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924244994106:android:63a54d87b7a4e7a36d2d03",
+        "android_client_info": {
+          "package_name": "com.mycompany.zencis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924244994106-c7tfrrodij52ejgjf4sij5in97gv0nr5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.zencis",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "924244994106-369sb9qt25g5flgn3e81se20o0c690u9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJGd64iaL3-bLRzJZWIQqJ-DNVFtNUaIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924244994106-369sb9qt25g5flgn3e81se20o0c690u9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "924244994106-1ed5lh1nv0rfq031iniffoktg9qt4j4u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.zencis"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

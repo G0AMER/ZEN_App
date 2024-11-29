@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'login.dart';
 
 class Signup extends StatefulWidget {
@@ -14,6 +16,57 @@ class _SignupState extends State<Signup> {
   String _confirmPassword = '';
   bool _obscureText = true;
   bool _obscureTextt = true;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _signUp() async {
+    if (_formKey.currentState!.validate()) {
+      if (_password != _confirmPassword) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Passwords do not match')),
+        );
+        return;
+      }
+
+      try {
+        await _auth.createUserWithEmailAndPassword(
+          email: _email,
+          password: _password,
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Sign up successfully'),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } on FirebaseAuthException catch (e) {
+        String errorMessage = 'An error occurred';
+        if (e.code == 'weak-password') {
+          errorMessage = 'The password is too weak.';
+        } else if (e.code == 'email-already-in-use') {
+          errorMessage = 'An account already exists for this email.';
+        } else if (e.code == 'invalid-email') {
+          errorMessage = 'The email address is not valid.';
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,69 +96,55 @@ class _SignupState extends State<Signup> {
                       child: Text(
                         'Create Account',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'times new roman',
-                            fontSize: 30),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'times new roman',
+                          fontSize: 30,
+                        ),
                       ),
                     ),
                     SizedBox(height: 40.0),
                     TextFormField(
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.email,
-                          color: Colors.white,
-                        ),
+                        prefixIcon: Icon(Icons.email, color: Colors.white),
                         labelText: 'Email',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
+                        labelStyle: TextStyle(color: Colors.white),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                       ),
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _email = value;
-                        });
-                      },
+                      style: TextStyle(color: Colors.white),
+                      onChanged: (value) => _email = value,
                       cursorColor: Colors.white,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          return 'Enter a valid email';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 16.0),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
+                        labelStyle: TextStyle(color: Colors.white),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
-                        prefixIcon: Icon(
-                          Icons.lock,
-                          color: Colors.white,
-                        ),
+                        prefixIcon: Icon(Icons.lock, color: Colors.white),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _obscureText
@@ -121,39 +160,33 @@ class _SignupState extends State<Signup> {
                         ),
                       ),
                       obscureText: _obscureText,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      cursorColor: Color.fromARGB(255, 255, 255, 255),
-                      onChanged: (value) {
-                        setState(() {
-                          _password = value;
-                        });
+                      style: TextStyle(color: Colors.white),
+                      cursorColor: Colors.white,
+                      onChanged: (value) => _password = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a password';
+                        }
+                        if (value.length < 6) {
+                          return 'Password must be at least 6 characters long';
+                        }
+                        return null;
                       },
                     ),
                     SizedBox(height: 16.0),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Confirm password',
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
+                        labelStyle: TextStyle(color: Colors.white),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          ),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
-                        prefixIcon: Icon(
-                          Icons.lock,
-                          color: Colors.white,
-                        ),
+                        prefixIcon: Icon(Icons.lock, color: Colors.white),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _obscureTextt
@@ -169,14 +202,14 @@ class _SignupState extends State<Signup> {
                         ),
                       ),
                       obscureText: _obscureTextt,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      cursorColor: Color.fromARGB(255, 255, 255, 255),
-                      onChanged: (value) {
-                        setState(() {
-                          _confirmPassword = value;
-                        });
+                      style: TextStyle(color: Colors.white),
+                      cursorColor: Colors.white,
+                      onChanged: (value) => _confirmPassword = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please confirm your password';
+                        }
+                        return null;
                       },
                     ),
                     SizedBox(height: 40.0),
@@ -194,47 +227,12 @@ class _SignupState extends State<Signup> {
                       child: Text(
                         'Sign Up',
                         style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Arimo'),
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Arimo',
+                        ),
                       ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          if (_email.isNotEmpty &&
-                              _password.isNotEmpty &&
-                              _confirmPassword.isNotEmpty) {
-                            // All form fields are valid and non-empty. Show alert.
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Sign up successfully'),
-                                  actions: [
-                                    TextButton(
-                                      child: Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginPage()),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          } else {
-                            // Some form fields are empty. Show snackbar.
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('All fields are required'),
-                              ),
-                            );
-                          }
-                        }
-                      },
+                      onPressed: _signUp,
                     ),
                     SizedBox(height: 30),
                     Center(
@@ -243,7 +241,7 @@ class _SignupState extends State<Signup> {
                         text: TextSpan(
                           text: 'Already have an account? ',
                           style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
+                            color: Colors.white,
                             fontSize: 16.0,
                           ),
                           children: <TextSpan>[
