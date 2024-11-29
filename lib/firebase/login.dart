@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:my_fashion_app/screens/product_list_screen.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import '../screens/webView.dart';
 import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => ProductListScreen()),
+                  MaterialPageRoute(builder: (context) => WebViewExample()),
                 );
               },
             ),

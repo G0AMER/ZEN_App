@@ -8,6 +8,7 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -87,7 +88,7 @@ class _MainScreen extends State<MainScreen>
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('8_U2_A7265_52b8a1cde6.webp'),
+            image: AssetImage('assets/8_U2_A7265_52b8a1cde6.webp'),
             fit: BoxFit.cover,
           ),
         ),
