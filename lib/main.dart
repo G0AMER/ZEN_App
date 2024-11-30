@@ -15,7 +15,7 @@ Future<void> main() async {
   );
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => MyApp(),
     ),
   );

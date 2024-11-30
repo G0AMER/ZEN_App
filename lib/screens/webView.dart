@@ -12,12 +12,12 @@ void _launchURL() async {
   await launchUrl(url);
 }
 
-class _ZenPageState extends State<ZenPage> {
-  int _currentIndex = 2; // Default to Home page
+int _currentIndex = 2; // Default to Home page
 
+class _ZenPageState extends State<ZenPage> {
   // List of pages for navigation
   final List<Widget> _pages = [
-    Center(child: Text("Feed Page")), // Replace with actual Wardrobe Page
+    Center(child: Text("Wardrobe Page")), // Replace with actual Wardrobe Page
     Center(child: Text("Scanner Page")), // Replace with actual Scanner Page
     HomePage(), // Replace with actual Home Page
     UserProfilePage(), // User Profile Page
@@ -71,7 +71,12 @@ class _ZenPageState extends State<ZenPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                icon: Icon(Icons.people, color: Colors.brown.shade700),
+                icon: Image.asset(
+                  'assets/img.png', // Path to your image asset
+                  height: 40, // Adjust size as needed
+                  width: 40, // Adjust size as needed
+                  color: Colors.brown.shade700,
+                ),
                 onPressed: () {
                   setState(() {
                     _currentIndex = 0; // Navigate to Wardrobe page
@@ -119,6 +124,90 @@ class _ZenPageState extends State<ZenPage> {
 }
 
 class HomePage extends StatelessWidget {
+  void _showCommunityOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Community",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown.shade900,
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Add navigation to Games page here
+                  Navigator.pop(context);
+                  print('Games button clicked');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.brown.shade900,
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 18),
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(30), // Increased roundness
+                  ),
+                  minimumSize:
+                      Size(double.infinity, 50), // Full width and taller button
+                ),
+                child: Text(
+                  'Games',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              ElevatedButton(
+                onPressed: () {
+                  // Add navigation to Feed page here
+                  Navigator.pop(context);
+                  print('Feed button clicked');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.brown.shade700,
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 18),
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(30), // Increased roundness
+                  ),
+                  minimumSize:
+                      Size(double.infinity, 50), // Full width and taller button
+                ),
+                child: Text(
+                  'Feed',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,6 +259,7 @@ class HomePage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     // Add community navigation here
+                    _showCommunityOptions(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.brown.shade700,
