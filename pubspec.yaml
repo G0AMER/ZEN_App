@@ -66,6 +66,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
 
   assets:
+    - assets/zen_logo.png
+    - assets/image 10.png
     - assets/underc.png
     - assets/mobile.png
     - assets/aa.png

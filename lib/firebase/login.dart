@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_fashion_app/firebase/signup.dart';
+import 'package:my_fashion_app/main.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../screens/webView.dart';
-import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -26,14 +27,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _loginWithEmailPassword() async {
+    print(_emailController.text);
+    print(1);
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+
       _showSuccessDialog(userCredential.user?.email ?? 'Unknown User');
     } on FirebaseAuthException catch (e) {
+      print(e);
       _showErrorSnackBar(e.message ?? 'An error occurred');
     }
   }
@@ -90,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => WebViewExample()),
+                  MaterialPageRoute(builder: (context) => ZenPage()),
                 );
               },
             ),
@@ -112,151 +117,197 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/baniere-femme-1-.webp'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.5), // Adjust the opacity here
-              BlendMode.dstATop, // Blend mode to apply the transparency
-            ),
-          ),
-        ),
-        child: Center(
-          child: Container(
-            padding: EdgeInsets.all(16.0),
-            constraints: BoxConstraints(
-              maxWidth: 600.0,
-              maxHeight: MediaQuery.of(context).size.height,
-            ),
-            child: SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Login',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30),
-                    ),
-                    SizedBox(height: 40.0),
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.email, color: Colors.white),
-                        labelText: 'Email',
-                        labelStyle: TextStyle(color: Colors.white),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                      style: TextStyle(color: Colors.white),
-                      cursorColor: Colors.white,
-                    ),
-                    SizedBox(height: 16.0),
-                    TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        labelStyle: TextStyle(color: Colors.white),
-                        prefixIcon: Icon(Icons.lock, color: Colors.white),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
-                        ),
-                      ),
-                      obscureText: _obscureText,
-                      style: TextStyle(color: Colors.white),
-                      cursorColor: Colors.white,
-                    ),
-                    SizedBox(height: 20.0),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 16.0,
-                          horizontal: 120.0,
-                        ),
-                      ),
-                      child: Text('Login'),
-                      onPressed: _loginWithEmailPassword,
-                    ),
-                    SizedBox(height: 20.0),
-                    Divider(thickness: 2, color: Colors.white),
-                    SizedBox(height: 20.0),
-                    Text('Or continue with',
-                        style: TextStyle(color: Colors.white)),
-                    SizedBox(height: 16.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: _loginWithGoogle,
-                          child: Image.asset(
-                            'assets/google.png',
-                            height: 50.0,
-                            width: 50.0,
-                          ),
-                        ),
-                        SizedBox(width: 16.0),
-                        GestureDetector(
-                          onTap: _loginWithApple,
-                          child: Image.asset(
-                            'assets/apple.png',
-                            height: 50.0,
-                            width: 50.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20.0),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Not a member? ',
-                        style: TextStyle(color: Colors.white),
-                        children: [
-                          TextSpan(
-                            text: 'Register now',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Signup()),
-                                );
-                              },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+      body: Stack(
+        children: [
+          // Background Image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/baniere-femme-1-.webp'),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.6), // Adjust the opacity here
+                  BlendMode.dstATop, // Blend mode to apply the transparency
                 ),
               ),
             ),
           ),
-        ),
+          // Overlay and Content
+          Center(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Title
+                  Text(
+                    "Login",
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    "Welcome back! it’s good to see you again",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 32.0),
+
+                  // Email Field
+                  TextField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email_outlined),
+                      labelText: 'Email',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+
+                  // Password Field
+                  TextField(
+                    obscureText: true,
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.lock_outline),
+                      labelText: 'Password',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      //suffixText: 'Forgot Password?',
+                      suffixStyle: TextStyle(
+                        color: Colors.brown,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+
+                  // Login Button
+                  ElevatedButton(
+                    onPressed: () {
+                      print(_passwordController.text);
+                      _loginWithEmailPassword();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.brown,
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+
+                  // Remember Me Checkbox
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Checkbox(value: false, onChanged: (value) {}),
+                      Text(
+                        "Remember Me",
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.0),
+
+                  // Social Media Login
+                  Text(
+                    "Or continue with",
+                    style: TextStyle(color: Colors.black, fontSize: 14),
+                  ),
+                  SizedBox(height: 16.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: _loginWithGoogle,
+                        child: Image.asset(
+                          'assets/google.png',
+                          height: 50.0,
+                          width: 50.0,
+                        ),
+                      ),
+                      SizedBox(width: 16.0),
+                      GestureDetector(
+                        onTap: _loginWithApple,
+                        child: Image.asset(
+                          'assets/apple.png',
+                          height: 50.0,
+                          width: 50.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 32.0),
+
+                  // Sign Up Prompt
+                  RichText(
+                    text: TextSpan(
+                      text: "You don’t have an account? ",
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                      children: [
+                        TextSpan(
+                          text: "Sign up",
+                          style: TextStyle(
+                            color: Colors.brown,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Signup()),
+                              );
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 32.0),
+
+                  // Home Button
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainScreen()),
+                      );
+                    },
+                    icon: Icon(Icons.home, color: Colors.white),
+                    label: Text(
+                      "Home",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.brown,
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      minimumSize: Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
