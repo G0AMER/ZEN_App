@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
 class WebViewExample extends StatelessWidget {
   // Method to launch URL in external browser
   void _launchURL() async {
-    Uri url = Uri.parse("https://metaperson.avatarsdk.com/");
+    Uri url = Uri.parse("https://avaturn.me");
     await launchUrl(url);
     /*if (await canLaunchUrl(url)) {
       await launchUrl(url); // Launch the URL in the default browser
