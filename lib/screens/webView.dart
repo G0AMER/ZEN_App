@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:my_fashion_app/screens/userProfilePage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ZenPage extends StatelessWidget {
-  // Method to launch URL in an external browser
-  void _launchURL() async {
-    Uri url = Uri.parse("https://hub.avaturn.me/create/scan");
-    await launchUrl(url);
-  }
+class ZenPage extends StatefulWidget {
+  @override
+  _ZenPageState createState() => _ZenPageState();
+}
+
+void _launchURL() async {
+  Uri url = Uri.parse("https://hub.avaturn.me/create/scan");
+  await launchUrl(url);
+}
+
+class _ZenPageState extends State<ZenPage> {
+  int _currentIndex = 2; // Default to Home page
+
+  // List of pages for navigation
+  final List<Widget> _pages = [
+    Center(child: Text("Feed Page")), // Replace with actual Wardrobe Page
+    Center(child: Text("Scanner Page")), // Replace with actual Scanner Page
+    HomePage(), // Replace with actual Home Page
+    UserProfilePage(), // User Profile Page
+    Center(child: Text("Hanger Page")), // Replace with actual Hanger Page
+  ];
+
+  // Method to handle external URL launch
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +35,7 @@ class ZenPage extends StatelessWidget {
         centerTitle: true,
         title: Image.asset(
           'assets/zen_logo.png',
-          height: 120,
+          height: 30,
         ),
         leading: IconButton(
           icon: Icon(Icons.settings, color: Colors.grey.shade700),
@@ -34,6 +52,76 @@ class ZenPage extends StatelessWidget {
           ),
         ],
       ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              top: BorderSide(color: Colors.grey.shade300),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: Icon(Icons.people, color: Colors.brown.shade700),
+                onPressed: () {
+                  setState(() {
+                    _currentIndex = 0; // Navigate to Wardrobe page
+                  });
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.qr_code_scanner, color: Colors.brown.shade700),
+                onPressed: () {
+                  setState(() {
+                    _currentIndex = 1; // Navigate to Scanner page
+                  });
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.home, color: Colors.brown.shade700),
+                onPressed: () {
+                  setState(() {
+                    _currentIndex = 2; // Navigate to Home page
+                  });
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.person, color: Colors.brown.shade700),
+                onPressed: () {
+                  setState(() {
+                    _currentIndex = 3; // Navigate to Profile page
+                  });
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.checkroom, color: Colors.brown.shade700),
+                onPressed: () {
+                  setState(() {
+                    _currentIndex = 4; // Navigate to Hanger page
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -104,59 +192,6 @@ class ZenPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        notchMargin: 8.0,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(
-              top: BorderSide(color: Colors.grey.shade300),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: Icon(Icons.style,
-                    color: Colors.brown.shade700), // Wardrobe icon
-                onPressed: () {
-                  // Add wardrobe navigation here
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.qr_code_scanner,
-                    color: Colors.brown.shade700), // Scanner icon
-                onPressed: () {
-                  // Add scanner navigation here
-                },
-              ),
-              IconButton(
-                icon:
-                    Icon(Icons.home, color: Colors.brown.shade700), // Home icon
-                onPressed: () {
-                  // Add home navigation here
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.person,
-                    color: Colors.brown.shade700), // Profile icon
-                onPressed: () {
-                  // Add profile navigation here
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.checkroom,
-                    color: Colors.brown.shade700), // Hanger icon
-                onPressed: () {
-                  // Add hanger navigation here
-                },
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

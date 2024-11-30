@@ -83,6 +83,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showSuccessDialog(String userEmail) {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => ZenPage()));
     showDialog(
       context: context,
       builder: (BuildContext context) {

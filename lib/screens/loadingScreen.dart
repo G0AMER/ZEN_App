@@ -55,7 +55,7 @@ class _LoadingScreenState extends State<LoadingScreen>
             RotationTransition(
               turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
               ),
             ),
           ],
