@@ -3,7 +3,7 @@
 
 # ZEN Avatar Customization App
 
-Welcome to the **ZEN Avatar Customization App**! This Flutter application allows users to create and update their personalized avatars, connect with the ZEN community, and explore various customization options. The app integrates modern UI/UX design principles for a seamless and engaging user experience.
+Welcome to the **ZEN Store App**! This Flutter application allows users to create and update their personalized avatars, connect with the ZEN community, and explore various customization options. The app integrates modern UI/UX design principles for a seamless and engaging user experience.
 
 (This app is still under development)
 
@@ -13,7 +13,7 @@ Welcome to the **ZEN Avatar Customization App**! This Flutter application allows
 
 1. **Avatar Customization**
     - Update and personalize your avatar with a sleek and intuitive interface.
-    - Integrated with external avatar generation tools like [Avaturn](https://hub.avaturn.me/create/scan).
+    - Integrated with external avatar generation tool [Avaturn](https://hub.avaturn.me/create/scan).
 
 2. **Community Engagement**
     - Connect with other users in the ZEN community.
@@ -92,5 +92,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - Flutter and Dart for providing a powerful framework for mobile development.
 
 ---
-
-Let me know if you'd like to make any specific adjustments!
