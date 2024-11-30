@@ -41,11 +41,11 @@ Welcome to the **ZEN Store App**! This Flutter application allows users to creat
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/Mezghani-Mariem/My_Fashion_App.git
+   git clone https://github.com/G0AMER/ZEN_App.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd My_Fashion_App
+   cd ZEN_App
    ```
 3. Install dependencies:
    ```bash
@@ -61,7 +61,7 @@ Welcome to the **ZEN Store App**! This Flutter application allows users to creat
 ## Usage
 
 - **Update Avatar:**  
-  Tap the "Update Avatar" button to open the avatar customization page in your default browser.
+  Tap the "Generate Avatar" button to open the avatar customization page in your default browser.
 
 - **Community:**  
   Access the community features by tapping the "Community" button.
