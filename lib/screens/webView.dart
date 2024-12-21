@@ -1,6 +1,31 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:my_fashion_app/screens/userProfilePage.dart';
+import 'package:my_fashion_app/eya/account.dart';
+import 'package:my_fashion_app/eya/feed.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../eya/all.dart';
+import '../eya/gaming.dart';
+import '../eya/try code a barre.dart';
+
+void main() {
+  runApp(
+    DevicePreview(
+      enabled: true,
+      builder: (context) => MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ZenPage(),
+    );
+  }
+}
 
 class ZenPage extends StatefulWidget {
   @override
@@ -17,10 +42,10 @@ int _currentIndex = 2; // Default to Home page
 class _ZenPageState extends State<ZenPage> {
   // List of pages for navigation
   final List<Widget> _pages = [
-    Center(child: Text("Wardrobe Page")), // Replace with actual Wardrobe Page
-    Center(child: Text("Scanner Page")), // Replace with actual Scanner Page
+    WardrobeApp(), // Replace with actual Wardrobe Page
+    BarcodeScannerPage(), // Replace with actual Scanner Page
     HomePage(), // Replace with actual Home Page
-    UserProfilePage(), // User Profile Page
+    ProfileScreen1(), // User Profile Page
     Center(child: Text("Hanger Page")), // Replace with actual Hanger Page
   ];
 
@@ -153,8 +178,11 @@ class HomePage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // Add navigation to Games page here
-                  Navigator.pop(context);
-                  print('Games button clicked');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CustomPhotoScreen()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.brown.shade900,
@@ -179,8 +207,10 @@ class HomePage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // Add navigation to Feed page here
-                  Navigator.pop(context);
-                  print('Feed button clicked');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FeedScreen()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.brown.shade700,
@@ -270,7 +300,7 @@ class HomePage extends StatelessWidget {
                         EdgeInsets.symmetric(vertical: 16.0, horizontal: 40.0),
                   ),
                   child: Text(
-                    'Community',
+                    '   Community   ',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16.0,

@@ -11,6 +11,8 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
+  String _fullName = '';
+  String _zenIDCard = '';
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
@@ -107,7 +109,62 @@ class _SignupState extends State<Signup> {
                       ),
                     ),
                     SizedBox(height: 40.0),
-
+                    //full name field
+                    TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon:
+                            Icon(Icons.person, color: Colors.brown.shade700),
+                        labelText: 'Full name',
+                        labelStyle: TextStyle(color: Colors.brown.shade700),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide(color: Colors.brown.shade700),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide(color: Colors.brown.shade900),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.brown.shade900),
+                      onChanged: (value) => _fullName = value,
+                      cursorColor: Colors.brown.shade900,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'This field is required';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 16.0),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.card_giftcard,
+                            color: Colors.brown.shade700),
+                        labelText: 'Zen ID Card Number',
+                        labelStyle: TextStyle(color: Colors.brown.shade700),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide(color: Colors.brown.shade700),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide(color: Colors.brown.shade900),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.brown.shade900),
+                      onChanged: (value) => _zenIDCard = value,
+                      cursorColor: Colors.brown.shade900,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your ZEN card number';
+                        }
+                        if (!RegExp(r'^[A-Z]{2}[0-9]{6}$').hasMatch(value)) {
+                          return 'Verify your ZEN card number';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 16.0),
                     // Email Field
                     TextFormField(
                       decoration: InputDecoration(

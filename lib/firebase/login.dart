@@ -16,13 +16,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _forgotPassEmailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscureText = true;
+  bool _isCodeResent = false;
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _forgotPassEmailController.dispose();
     super.dispose();
   }
 
@@ -191,6 +194,69 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+                  TextButton(
+                    onPressed: () {
+                      // Show Forgot Password Modal
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return Container(
+                            padding: EdgeInsets.all(20),
+                            height: MediaQuery.of(context).size.height *
+                                0.45, // Shortened height
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Forgot Password?",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 50),
+                                TextField(
+                                  controller: _forgotPassEmailController,
+                                  decoration: InputDecoration(
+                                    labelText: "Enter your email",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    prefixIcon: Icon(Icons.email),
+                                  ),
+                                ),
+                                SizedBox(height: 50),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xFF492B20),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10,
+                                        horizontal: 70), // Larger button
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(60.0),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    showVerificationModal(context);
+                                  },
+                                  child: Text(
+                                    "Submit",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Text("Forgot Password?"),
+                  ),
                   SizedBox(height: 16.0),
 
                   // Login Button
@@ -310,6 +376,195 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void showVerificationModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(20),
+          height: MediaQuery.of(context).size.height * 0.45, // Shortened height
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Verify Your Email",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(height: 30),
+              Text(
+                "Please enter the 4-digit code sent to " +
+                    _forgotPassEmailController.text,
+                style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(4, (index) => _buildCodeBox(index)),
+              ),
+              SizedBox(height: 30),
+              TextButton(
+                onPressed: () {
+                  // Resend Code logic
+                  setState(() {
+                    _isCodeResent = true;
+                  });
+
+                  Future.delayed(Duration(seconds: 2), () {
+                    setState(() {
+                      _isCodeResent = false;
+                    });
+                  });
+                },
+                child: Text(
+                  "Resend Code",
+                  style: TextStyle(
+                    color: Colors.red,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF492B20),
+                  padding: EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 70), // Larger button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(60.0),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  showNewPasswordModal(context);
+                },
+                child: Text(
+                  "Verify",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void showNewPasswordModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(20),
+          height: MediaQuery.of(context).size.height * 0.55, // Shortened height
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Create a New Password",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 30),
+              // New Password Field
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Password", style: TextStyle(fontSize: 16)),
+              ),
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: Icon(Icons.visibility),
+                ),
+              ),
+              SizedBox(height: 20),
+              // Confirm Password Field
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Confirm Password", style: TextStyle(fontSize: 16)),
+              ),
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: Icon(Icons.visibility),
+                ),
+              ),
+              SizedBox(height: 30),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF492B20),
+                  padding: EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 70), // Larger button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(60.0),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context); // Close the modal
+                },
+                child: Text(
+                  "Submit",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  final List<TextEditingController> _controllers =
+      List.generate(4, (_) => TextEditingController());
+  final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
+  Widget _buildCodeBox(int index) {
+    return Container(
+      width: 50,
+      height: 50,
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey),
+      ),
+      child: TextField(
+        controller: _controllers[index],
+        focusNode: _focusNodes[index],
+        textAlign: TextAlign.center,
+        maxLength: 1,
+        keyboardType: TextInputType.number,
+        style: TextStyle(fontSize: 24, color: Colors.black),
+        decoration: InputDecoration(
+          counterText: '', // Removes the counter text
+          border: InputBorder.none,
+        ),
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            if (index < _focusNodes.length - 1) {
+              FocusScope.of(context).requestFocus(_focusNodes[index + 1]);
+            } else {
+              _focusNodes[index].unfocus(); // Dismisses the keyboard
+            }
+          }
+        },
       ),
     );
   }
